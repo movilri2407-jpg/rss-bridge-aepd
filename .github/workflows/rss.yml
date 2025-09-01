@@ -2,8 +2,8 @@ name: Generate RSS for AEPD
 
 on:
   schedule:
-    - cron: "0 7 * * *"   # Ejecuta cada día a las 07:00 UTC (puedes cambiar la hora)
-  workflow_dispatch:       # Te permite lanzarlo manualmente desde la pestaña Actions
+    - cron: "0 6 * * *"   # Ejecuta cada día a las 06:00 UTC (~08:00 hora de España en verano, 07:00 en invierno)
+  workflow_dispatch:       # Permite lanzarlo manualmente desde la pestaña Actions
 
 jobs:
   build:
