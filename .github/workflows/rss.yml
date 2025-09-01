@@ -1,0 +1,29 @@
+name: Generate RSS for AEPD
+
+on:
+  schedule:
+    - cron: "0 7 * * *"   # Ejecuta cada día a las 07:00 UTC (puedes cambiar la hora)
+  workflow_dispatch:       # Te permite lanzarlo manualmente desde la pestaña Actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Run RSS-Bridge (Docker)
+        run: |
+          docker run --rm rssbridge/rss-bridge \
+            --action=display \
+            --bridge=Twitter \
+            --u=AEPD_es \
+            --format=Atom \
+            > feed.xml
+
+      - name: Push feed to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          publish_branch: gh-pages
